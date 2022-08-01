@@ -13,24 +13,38 @@ class CLI
     end
 
     def greet(name)
-        puts "brilliant, #{name}. Would you like to check out some quotes?"
-        puts "Input 'y' to see the the beloved characters, 'exit' to leave the application!"
+        puts "Brilliant, #{name}! Would you like to check out some quotes?"
+        puts "Input 'y' to see the the beloved characters, 'q' to leave the application!"
+        menu
     end
-# based on user selection list of characters, error message and exit
+
+    def friends_list
+        ["Ross", "Joey", "Chandler", "Monica", "Phoebe", "Rachel"].each.with_index(1) do |friends, i|
+            puts "#{i}. #{friends}"
+        end
+    end
+
+    def bye
+        puts "Bye for now!"
+    end
+
+    def invalid
+        puts "Input seems invalid. Can you please try again?"
+        menu
+    end
+
+        # based on user selection list of characters, error message and exit
 
     def menu
         selection = user_input
 
-        if select == 'y'
-
-        elsif selection =='exit'
-
+        if selection == 'y'
+            friends_list
+            menu
+        elsif selection == 'q'
+            bye
         else
-            puts "invalid"
+            invalid
         end
-
     end
-
-
-
 end
