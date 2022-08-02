@@ -5,6 +5,7 @@ class CLI
     def start
         puts "Welcome to the application Friends TV Show Quotes"
         puts "Can I have your name:"
+        API.get_data
         greet(user_input)
     end
 
@@ -14,14 +15,29 @@ class CLI
 
     def greet(name)
         puts "Brilliant, #{name}! Would you like to check out some quotes?"
-        puts "Input 'y' to see the the beloved characters, 'q' to leave the application!"
+        puts "Please input 'y' to select the beloved character, 'q' to leave the application!"
         menu
     end
 
     def friends_list
-        ["Ross", "Joey", "Chandler", "Monica", "Phoebe", "Rachel"].each.with_index(1) do |friends, i|
-            puts "#{i}. #{friends}"
+        FriendsQuote.all.each.with_index(1) do |friends, i|
+            puts "#{i}. #{friends.character}"
         end
+        friends_selection
+    end
+
+    def friends_selection
+        puts "Select a friend to get a quote!"
+
+        selection = user_input
+        quotation = FriendsQuote.find_quote(selection)
+        quote_detail(quotation)
+    end
+
+    def quote_detail(quotation)
+        puts "Quote: #{quotation.quote}"
+        puts "Character: #{quotation.character}"
+        menu
     end
 
     def bye
@@ -32,8 +48,6 @@ class CLI
         puts "Input seems invalid. Can you please try again?"
         menu
     end
-
-        # based on user selection list of characters, error message and exit
 
     def menu
         selection = user_input
