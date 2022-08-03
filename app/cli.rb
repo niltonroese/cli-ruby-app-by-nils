@@ -1,11 +1,11 @@
 class CLI
-    # def initialize
-    #     puts "welcome to the application Quotes from Friends"
-    # end
+    def initialize
+        Service.new.manipulate_data
+    end
+
     def start
         puts "Welcome to the application Friends TV Show Quotes"
         puts "Can I have your name:"
-        API.get_data
         greet(user_input)
     end
 
@@ -20,8 +20,8 @@ class CLI
     end
 
     def friends_list
-        FriendsQuote.all.each.with_index(1) do |friends, i|
-            puts "#{i}. #{friends.character}"
+        Characters.each do |friend|
+            puts "#{friend.id}. #{friend.name}"
         end
         friends_selection
     end
@@ -30,13 +30,15 @@ class CLI
         puts "Select a friend to get a quote!"
 
         selection = user_input
-        quotation = FriendsQuote.find_quote(selection)
+        quotation = Quotes.find_by(character_id: selection)
         quote_detail(quotation)
     end
 
     def quote_detail(quotation)
+        puts "----------------"
         puts "Quote: #{quotation.quote}"
-        puts "Character: #{quotation.character}"
+        # puts "Character: #{quotation.character}"
+        puts "----------------"
         menu
     end
 

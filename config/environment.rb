@@ -12,8 +12,8 @@ ActiveRecord::Base.establish_connection(
     :database => "db/development.sqlite3"
 )
 
-require_relative'../app/friends_quote'
-require_relative'../app/cli'
 require_relative'../app/model/character'
 require_relative'../app/model/quote'
 require_relative'../app/api'
+require_relative'../app/cli'
+require_relative'../app/service'
