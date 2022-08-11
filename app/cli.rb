@@ -28,6 +28,7 @@ class CLI
             menu
         elsif selection == 'q'
             bye
+            # menu2
         else
             invalid
         end
@@ -35,6 +36,7 @@ class CLI
 
     def bye
         puts "Bye for now!"
+        menu2
     end
 
     def invalid
@@ -61,36 +63,43 @@ class CLI
     def quote_detail(quotation_random)
         puts "----------------"
         puts "Quote: #{quotation_random.quote}"
+        # puts "Character: #{quotation_random.character_id}"
         puts "----------------"
         menu
     end
 
-    # def menu2
-    #     puts "Before I let you go, would you want to tell us your favorite character and respective quote?" 
-    #     puts "Please input 'y' to yes, or 'exit' to leave the application for good!"
+    def menu2
+        puts "Before I let you go, would you want to tell us your favorite character and respective quote?" 
+        puts "Please input 'y' to yes, or 'exit' to leave the application for good!"
 
-    #     selection = user_input
+        selection = user_input
 
-    #     if selection == 'y'
-    #         favorite_character_quote
-    #         thanks4playing
-    #     else selection == 'exit'
-    #         thanks4playing
-    #     end
+        if selection == 'y'
+            puts "Please input Character."
+            selection = user_input
+            #function add_character(selection)
+            puts "Please input Quote."
+            selection = user_input
+            #function add_quote(selection)
+            thanks4playing
+        else selection == 'exit'
+            thanks4playing
+        end
+    end
+
+    # def add_character(selection)
+    # Character.where(name: selection).first_or_create
     # end
 
-    # def favorite_character_quote
-    #     selection = user_input
-    #     Character.create
-
+    # def add_quote(selection)
+    # Quote.where(quote: selection, character_id: Character.last.first_or_create
     # end
 
-    # def thanks4playing
-    #     puts "Thanks for playing!!!"
-    # end
-
-
-
-
+    def thanks4playing
+        puts "^^^^^^^^^^^^^^^^^^^^^"
+        puts "Thanks for playing!!!"
+        puts "^^^^^^^^^^^^^^^^^^^^^"
+        exit!
+    end
 
 end
