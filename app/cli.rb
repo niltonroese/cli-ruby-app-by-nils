@@ -51,12 +51,17 @@ class CLI
     end
 
     def friends_selection
-        puts "Select a friend to get a quote!"
+        puts "Select a Friend to get a quote! (use its number)"
 
         selection = user_input
-        quotation = Quote.where(character_id: selection)
-        quotation_random = quotation.shuffle.first
-        quote_detail(quotation_random)
+        if Character.exists?(id: selection)
+            quotation = Quote.where(character_id: selection)
+            quotation_random = quotation.shuffle.first
+            quote_detail(quotation_random)
+        else
+            puts "Input seems invalid. Can you please try again?"
+            friends_selection
+        end
     end
 
     def quote_detail(quotation_random)
@@ -76,10 +81,10 @@ class CLI
         if selection == 'y'
             puts "Please input Character:"
             selection = user_input
-            new_character = add_character(selection)
+            users_fav_character = add_character(selection)
             puts "Please input Quote:"
             selection = user_input
-            add_quote(selection, new_character.id)
+            add_quote(selection, users_fav_character)
             puts "Your favorite Character and Quote has been saved on our database!"
             by_for_now
         else selection == 'exit'
@@ -91,8 +96,8 @@ class CLI
         Character.find_or_create_by(name: selection)
     end
 
-    def add_quote(selection, character_id)
-        Quote.find_or_create_by(quote: selection, character_id: character_id)
+    def add_quote(selection, users_fav_character)
+        Quote.find_or_create_by(quote: selection, character_id: users_fav_character.id)
     end
 
     def by_for_now
