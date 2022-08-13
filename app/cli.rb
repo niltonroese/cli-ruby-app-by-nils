@@ -15,7 +15,6 @@ class CLI
 
     def greet(name)
         puts "Brilliant, #{name}! Would you like to check out some quotes?"
-        # puts "Please input 'y' to select the beloved character, 'q' to leave the application!"
         menu
     end
 
@@ -25,17 +24,17 @@ class CLI
 
         if selection == 'y'
             friends_list
-            menu
         elsif selection == 'q'
             bye
-            # menu2
+            menu2
         else
             invalid
         end
     end
 
     def bye
-        puts "Bye for now!"
+        puts "Hold on!"
+        puts "********"
         menu2
     end
 
@@ -61,41 +60,42 @@ class CLI
     end
 
     def quote_detail(quotation_random)
-        puts "----------------"
+        puts "-----------------------------------------------------------------"
         puts "Quote: #{quotation_random.quote}"
-        # puts "Character: #{quotation_random.character_id}"
-        puts "----------------"
+        puts "Character: #{Character.find(quotation_random.character_id).name}"
+        puts "------------------------------------------------------------------"
         menu
     end
 
     def menu2
-        puts "Before I let you go, would you want to tell us your favorite character and respective quote?" 
+        puts "Before I let you go, can you tell us your favorite character and respective quote?" 
         puts "Please input 'y' to yes, or 'exit' to leave the application for good!"
 
         selection = user_input
 
         if selection == 'y'
-            puts "Please input Character."
+            puts "Please input Character:"
             selection = user_input
-            #function add_character(selection)
-            puts "Please input Quote."
+            new_character = add_character(selection)
+            puts "Please input Quote:"
             selection = user_input
-            #function add_quote(selection)
-            thanks4playing
+            add_quote(selection, new_character.id)
+            puts "Your favorite Character and Quote has been saved on our database!"
+            by_for_now
         else selection == 'exit'
-            thanks4playing
+            by_for_now
         end
     end
 
-    # def add_character(selection)
-    # Character.where(name: selection).first_or_create
-    # end
+    def add_character(selection)
+        Character.find_or_create_by(name: selection)
+    end
 
-    # def add_quote(selection)
-    # Quote.where(quote: selection, character_id: Character.last.first_or_create
-    # end
+    def add_quote(selection, character_id)
+        Quote.find_or_create_by(quote: selection, character_id: character_id)
+    end
 
-    def thanks4playing
+    def by_for_now
         puts "^^^^^^^^^^^^^^^^^^^^^"
         puts "Thanks for playing!!!"
         puts "^^^^^^^^^^^^^^^^^^^^^"
